@@ -412,7 +412,8 @@ function telaMeses(){
 }
 function telaMes(){
   const prods=Object.entries(ACERVO.data[rota.mes]).sort((a,b)=>a[0].localeCompare(b[0],'pt'));
-  tela.innerHTML=`<h1>${rota.mes} 2026</h1>
+  tela.innerHTML=`<button class="voltar" onclick="ir({nivel:'lf_meses'})">← Voltar para os meses</button>
+  <h1>${rota.mes} 2026</h1>
   <p class="sub">${fotosMes(rota.mes)} fotos em ${prods.length} produtos.</p>
   <div class="itens" style="margin-top:24px">${prods.map(([nome,arqs])=>{
     const alvo=`ir({nivel:"lf_produto",mes:${jj(rota.mes)},prod:${jj(nome)}})`;
@@ -426,7 +427,8 @@ function telaMes(){
 }
 function telaFotosProduto(){
   const arqs=ACERVO.data[rota.mes][rota.prod];
-  tela.innerHTML=`<h1>${esc(rota.prod)}</h1>
+  tela.innerHTML=`<button class="voltar" onclick='ir({nivel:"lf_mes",mes:${jj(rota.mes)}})'>← Voltar para ${rota.mes}</button>
+  <h1>${esc(rota.prod)}</h1>
   <p class="sub">${arqs.length} ${arqs.length===1?'foto':'fotos'} · ${rota.mes} 2026</p>
   <div class="itens" style="margin-top:24px">${arqs.map(cardFoto).join('')}</div>`;
 }
@@ -450,7 +452,8 @@ function telaMarca(){
   const lista=CAT.data[rota.marca], pag=rota.pag||0;
   const ini=pag*POR_PAG, fim=Math.min(ini+POR_PAG,lista.length);
   const paginas=Math.ceil(lista.length/POR_PAG);
-  tela.innerHTML=`<h1>${esc(rota.marca)}</h1>
+  tela.innerHTML=`<button class="voltar" onclick="ir({nivel:'pr_marcas'})">← Voltar para as marcas</button>
+  <h1>${esc(rota.marca)}</h1>
   <p class="sub">${lista.length.toLocaleString('pt-BR')} produtos · mostrando ${ini+1} a ${fim}</p>
   <div class="itens" style="margin-top:24px">${lista.slice(ini,fim).map(p=>cardProduto(p,rota.marca,pag)).join('')}</div>
   ${paginas>1?`<div class="paginar">
@@ -471,7 +474,8 @@ function cardProduto(p,marca,pag){
 }
 function telaProduto(){
   const p=rota.prod;
-  tela.innerHTML=`<h1>${esc(p.n)}</h1>
+  tela.innerHTML=`<button class="voltar" onclick='ir({nivel:"pr_marca",marca:${jj(rota.marca)},pag:${rota.pag||0}})'>← Voltar para ${esc(rota.marca)}</button>
+  <h1>${esc(p.n)}</h1>
   <dl class="ficha">
     <dt>Código</dt><dd>${esc(p.s)}</dd>
     <dt>Marca</dt><dd>${esc(rota.marca)}</dd>
